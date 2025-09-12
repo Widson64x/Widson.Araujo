@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0ea5e9" id="metaTheme"/>
+  <title>Widson Rodrigues • Portfólio</title>
+  <meta name="description" content="Portfólio de Widson Rodrigues — Backend, Dados e IA. Projetos: Luft‑Docs, Nexus HUB, Aéreo‑Comparativos, dashboards, ETL, APIs e automações." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: 'var(--brand-color)',
+            brand2: 'var(--brand2-color)',
+          },
+          boxShadow: {
+            glow: '0 10px 40px var(--glow-color)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/vanta@latest/dist/vanta.net.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+
+  <style>
+    /* ===== base e variáveis de tema ===== */
+    :root {
+      /* Cores Padrão (Cyber Sky) */
+      --bg-color: #020617;
+      --bg-header-color: rgba(2, 6, 23, 0.7);
+      --bg-card-color: rgba(2, 6, 23, 0.5);
+      --text-color: #f1f5f9;
+      --text-muted-color: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --brand-color: #0ea5e9;
+      --brand2-color: #a78bfa;
+      --brand-text-color: #020617;
+      --glow-color: rgba(2, 8, 23, 0.6);
+      --chart-grid-color: rgba(255, 255, 255, .08);
+      --chart-label-color: #cbd5e1;
+      --chart-bg-color: rgba(2, 6, 23, 0.5);
+    }
+    
+    html { scroll-behavior: smooth; }
+    body { 
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .text-muted { color: var(--text-muted-color); }
+    .glass {
+      background: var(--glass-bg);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    .btn-brand {
+      background-image: linear-gradient(to right, var(--brand-color), var(--brand2-color));
+      color: var(--brand-text-color);
+    }
+    .text-gradient {
+      background-image: linear-gradient(to right, var(--brand-color), var(--brand2-color));
+    }
+    .border-dynamic { border-color: var(--border-color); }
+    .bg-header { background-color: var(--bg-header-color); }
+    .bg-card { background-color: var(--bg-card-color); }
+    .underline-brand { text-decoration-color: var(--brand-color); }
+    .underline-brand2 { text-decoration-color: var(--brand2-color); }
+
+    /* print CV limpo */
+    @media print{ .no-print{ display:none !important } body{ background:#fff; color: #000; } }
+  </style>
+</head>
+<body class=""> <header class="sticky top-0 z-50 border-b border-dynamic bg-header backdrop-blur no-print">
+    <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand to-brand2 grid place-items-center font-extrabold shadow-glow text-slate-900">W</div>
+        <h1 class="text-base font-semibold">Widson Rodrigues • Backend · Dados · IA</h1>
+      </a>
+      <div class="flex items-center gap-2">
+        <button id="themeBtn" class="px-3 py-2 rounded-full glass hover:bg-white/10">Tema</button>
+        <button id="cvBtn" class="px-3 py-2 rounded-full btn-brand font-semibold">Baixar CV</button>
+        <a class="px-3 py-2 rounded-full glass hover:bg-white/10" href="https://github.com/Widson64x" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.09-.75.08-.74.08-.74 1.2.08 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.48.99.11-.78.42-1.3.76-1.6-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.4 11.4 0 0 1 6.01 0c2.28-1.55 3.29-1.23 3.29-1.23.67 1.65.26 2.87.13 3.17.77.84 1.24 1.9 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.69.83.58A12 12 0 0 0 12 .5Z"/></svg>
+        </a>
+        <button id="cmdBtn" class="px-3 py-2 rounded-full glass hover:bg-white/10" title="Ctrl/⌘+K">⌘K</button>
+      </div>
+    </nav>
+  </header>
+
+  <section id="top" class="relative overflow-hidden">
+    <div id="vanta" class="absolute inset-0 -z-10 opacity-20"></div>
+    <div class="container mx-auto px-4 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
+      <div>
+        <h2 class="text-3xl lg:text-6xl font-extrabold leading-tight"><span class="text-transparent bg-clip-text text-gradient">Olá! Eu sou o Widson</span><br> crio <span class="underline underline-brand/60 underline-offset-4">APIs</span>, <span class="underline underline-brand2/60 underline-offset-4">ETLs</span> e <span class="underline decoration-sky-400/50 underline-offset-4">assistentes de IA</span> que destravam operações e processos.</h2>
+        <p class="mt-4 text-muted text-lg">Systems Trainee na <strong>LUFT Logistics</strong>, com foco em Python (Flask/FastAPI/Streamlit), SQL (PostgreSQL/SQL Server/SQLite), observabilidade (Grafana/Prometheus), CI/CD e IA (Groq/Gemini).<br/><span id="typed" class="text-muted"></span></p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="#projetos" class="px-4 py-2 rounded-full btn-brand font-semibold">Ver Projetos</a>
+          <a href="#contato" class="px-4 py-2 rounded-full glass hover:bg-white/10">Contato</a>
+          <span class="px-3 py-2 rounded-full glass">🏅 Luft Inovadores (Top 10)</span>
+        </div>
+        <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="glass rounded-xl p-4" data-kpi="6+"><p class="text-xs text-muted">APIs & Serviços</p><p class="text-2xl font-bold">0</p></div>
+          <div class="glass rounded-xl p-4" data-kpi="8+"><p class="text-xs text-muted">Dashboards/Obs</p><p class="text-2xl font-bold">0</p></div>
+          <div class="glass rounded-xl p-4" data-kpi="10+"><p class="text-xs text-muted">ETLs & Automations</p><p class="text-2xl font-bold">0</p></div>
+          <div class="glass rounded-xl p-4" data-kpi="20+"><p class="text-xs text-muted">Releases em produção</p><p class="text-2xl font-bold">0</p></div>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="rounded-2xl border-dynamic p-4 glass shadow-glow" data-aos="fade-up">
+          <div class="rounded-xl overflow-hidden border-dynamic">
+            <canvas id="skillsRadar" style="background-color: var(--chart-bg-color);"></canvas>
+          </div>
+          <p class="mt-4 text-sm text-muted">Radar de stack (dinâmico). Atualize facilmente os valores no script.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mx-auto px-4 py-10 grid md:grid-cols-2 gap-4">
+    <article class="relative rounded-2xl p-6 bg-card border border-dynamic overflow-hidden" data-aos="fade-right">
+      <div class="absolute right-0 bottom-0 w-48 h-48 bg-gradient-to-tr from-brand/20 to-brand2/20 blur-3xl -z-10"></div>
+      <h3 class="text-xl font-bold">Luft‑Docs</h3>
+      <p class="text-muted">Portal unificado com busca híbrida, permissões por grupo, dashboards e APIs para documentos críticos.</p>
+      <div class="mt-3 flex gap-2"> <a class="px-3 py-2 rounded-full glass" href="https://github.com/Widson64x/Luft-Docs" target="_blank">Código</a> <a class="px-3 py-2 rounded-full glass" href="#projetos" onclick="selectTag('flask')">Ver tech</a> </div>
+    </article>
+    <article class="relative rounded-2xl p-6 bg-card border border-dynamic overflow-hidden" data-aos="fade-left">
+      <div class="absolute right-0 bottom-0 w-48 h-48 bg-gradient-to-tr from-brand2/20 to-brand/20 blur-3xl -z-10"></div>
+      <h3 class="text-xl font-bold">ChatMenu – Groq/Gemini</h3>
+      <p class="text-muted">Assistente unificado com contexto, upload e fallback de modelos gratuitos. Ideal para o time interno.</p>
+      <div class="mt-3 flex gap-2"> <a class="px-3 py-2 rounded-full glass" href="https://github.com/Widson64x" target="_blank">Repos</a> <button class="px-3 py-2 rounded-full glass" onclick="selectTag('ia')">Filtrar IA</button> </div>
+    </article>
+  </section>
+
+  <section id="projetos" class="container mx-auto px-4 py-16">
+    <div class="flex items-end justify-between gap-4 flex-wrap">
+      <div>
+        <h3 class="text-2xl font-bold">Projetos em Destaque</h3>
+        <p class="text-muted">Use a busca/tags. Dados como ⭐ são puxados da GitHub API sempre que possível.</p>
+      </div>
+      <div class="flex items-center gap-2 no-print">
+        <div class="relative">
+          <input id="q" class="pl-9 pr-3 py-2 rounded-xl bg-card border-dynamic" placeholder="Buscar por nome, stack ou problema…" oninput="filterProjects()"/>
+          <svg class="absolute left-2 top-2.5 opacity-60" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </div>
+        <div id="tags" class="flex flex-wrap gap-2"></div>
+      </div>
+    </div>
+
+    <div id="grid" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    <div id="empty" class="hidden mt-6 text-center border border-dashed border-dynamic rounded-xl p-6 text-muted">Nenhum projeto encontrado para esse filtro. Tente outra tag ou termo. 🙂</div>
+  </section>
+
+  <section class="container mx-auto px-4 pb-8">
+    <h3 class="text-2xl font-bold mb-3">Experiência & Formação</h3>
+    <div class="border-l-2 border-dynamic pl-5 grid gap-6">
+      <div data-aos="fade-up">
+        <h4 class="font-semibold">Systems Trainee (Sistemas/Engenharia) — <b>LUFT Logistics</b></h4>
+        <p class="text-muted text-sm">2024–atual • Backend, APIs, ETL, observabilidade, automações, IA</p>
+        <p class="">Flask/FastAPI, Grafana/Prometheus, Nginx, CI/CD, integrações Groq/Gemini, pipelines SQL (PostgreSQL/SQL Server) e migrações.</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="100">
+        <h4 class="font-semibold">Jovem Aprendiz — Área Comercial/Projetos → Torre de Controle</h4>
+        <p class="text-muted text-sm">2023–2024 • CRM, relatórios, processos operacionais</p>
+        <p class="">Automação de rotinas, padronização de dados e apoio à operação.</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="150">
+        <h4 class="font-semibold">UNIP — Ciência da Computação</h4>
+        <p class="text-muted text-sm">2023– • Graduação em andamento</p>
+        <p class="">Projetos: libGDX, Android (jogo sustentabilidade), dashboards Python, bancos de dados e algoritmos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mx-auto px-4 pb-16">
+    <h3 class="text-2xl font-bold mb-3">Stack & Competências</h3>
+    <div class="grid md:grid-cols-4 gap-4">
+      <div class="glass rounded-xl p-4"><h5 class="font-semibold mb-2">Backend & APIs</h5><div class="flex flex-wrap gap-2 text-sm"><span class="px-2 py-1 rounded-full glass">Python</span><span class="px-2 py-1 rounded-full glass">Flask</span><span class="px-2 py-1 rounded-full glass">FastAPI</span><span class="px-2 py-1 rounded-full glass">Streamlit</span><span class="px-2 py-1 rounded-full glass">Waitress/Gunicorn</span><span class="px-2 py-1 rounded-full glass">Nginx</span></div></div>
+      <div class="glass rounded-xl p-4"><h5 class="font-semibold mb-2">Dados & ETL</h5><div class="flex flex-wrap gap-2 text-sm"><span class="px-2 py-1 rounded-full glass">PostgreSQL</span><span class="px-2 py-1 rounded-full glass">SQL Server</span><span class="px-2 py-1 rounded-full glass">SQLite</span><span class="px-2 py-1 rounded-full glass">DuckDB</span><span class="px-2 py-1 rounded-full glass">Parquet/QVD</span><span class="px-2 py-1 rounded-full glass">Pandas</span></div></div>
+      <div class="glass rounded-xl p-4"><h5 class="font-semibold mb-2">Observabilidade & DevOps</h5><div class="flex flex-wrap gap-2 text-sm"><span class="px-2 py-1 rounded-full glass">Grafana</span><span class="px-2 py-1 rounded-full glass">Prometheus</span><span class="px-2 py-1 rounded-full glass">CI/CD</span><span class="px-2 py-1 rounded-full glass">Windows Server</span><span class="px-2 py-1 rounded-full glass">Ubuntu</span><span class="px-2 py-1 rounded-full glass">Systemd</span></div></div>
+      <div class="glass rounded-xl p-4"><h5 class="font-semibold mb-2">IA & Automação</h5><div class="flex flex-wrap gap-2 text-sm"><span class="px-2 py-1 rounded-full glass">Groq</span><span class="px-2 py-1 rounded-full glass">Gemini</span><span class="px-2 py-1 rounded-full glass">OCR</span><span class="px-2 py-1 rounded-full glass">RAG/Busca</span><span class="px-2 py-1 rounded-full glass">Assistentes</span></div></div>
+    </div>
+  </section>
+
+  <section id="contato" class="container mx-auto px-4 pb-24">
+    <h3 class="text-2xl font-bold mb-3">Contato</h3>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="glass rounded-xl p-5">
+        <h4 class="font-semibold">Vamos construir algo?</h4>
+        <p class="text-muted">Aberto para colaborações, freelas e ideias de impacto em logística, dados e IA.</p>
+        <div class="mt-3 flex gap-2">
+          <a class="px-4 py-2 rounded-full btn-brand font-semibold" href="mailto:widson.araujo@luftlogistics.com?subject=Contato%20via%20Portf%C3%B3lio">Enviar e‑mail</a>
+          <button class="px-4 py-2 rounded-full glass" id="copyMail">Copiar e‑mail</button>
+        </div>
+      </div>
+      <div class="glass rounded-xl p-5">
+        <h4 class="font-semibold">Redes</h4>
+        <p class="text-muted">Acompanhe meus códigos e projetos atuais.</p>
+        <div class="mt-3 flex gap-2">
+          <a class="px-4 py-2 rounded-full glass" href="https://github.com/Widson64x" target="_blank">GitHub</a>
+          <a class="px-4 py-2 rounded-full glass" href="#" onclick="alert('Atualize seu LinkedIn no código: LINKS.LINKEDIN')">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-center text-muted pb-10">Feito com ❤️ por Widson Rodrigues — © <span id="year"></span></footer>
+
+  <div id="themeModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm no-print">
+    <div class="w-[min(500px,92vw)] rounded-2xl border-dynamic bg-card p-4 shadow-glow">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold">Escolha um Tema</h3>
+        <button id="closeThemeModalBtn" class="p-1 rounded-full hover:bg-white/10">&times;</button>
+      </div>
+      <div id="themeGrid" class="grid grid-cols-2 gap-3">
+        </div>
+    </div>
+  </div>
+
+  <div id="cmd" class="fixed inset-0 hidden items-start justify-center pt-24 bg-black/60 backdrop-blur-sm">
+    <div class="w-[min(700px,92vw)] rounded-2xl border-dynamic bg-card p-2 shadow-glow">
+      <input id="cmdInput" class="w-full bg-transparent p-3 outline-none" placeholder="Digite um comando… (ex.: projetos, contato, tema, github, cv)"/>
+      <div id="cmdList" class="max-h-80 overflow-auto"></div>
+    </div>
+  </div>
+
+  <button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="hidden fixed right-4 bottom-4 px-4 py-2 rounded-full glass no-print">Topo ↑</button>
+
+  <script>
+    // ======================
+    // Links & dados
+    // ======================
+    const LINKS = { EMAIL: 'widson.araujo@luftlogistics.com', GITHUB: 'https://github.com/Widson64x', LINKEDIN: 'https://www.linkedin.com/in/SEU-LINKEDIN-AQUI' };
+
+    // ======================
+    // Vanta (bg animado)
+    // ======================
+    let vantaEffect;
+    
+    // ======================
+    // Typed (hero)
+    // ======================
+    new Typed('#typed', { strings: ['Foco em logística, dados e IA.', 'Gosto de medir, automatizar e escalar.', 'Observabilidade não é luxo, é base.'], typeSpeed: 30, backSpeed: 18, backDelay: 1300, loop: true });
+
+    // ======================
+    // KPIs animados
+    // ======================
+    document.querySelectorAll('[data-kpi]').forEach(box => {
+      const target = box.getAttribute('data-kpi');
+      const numEl = box.querySelector('p:last-child');
+      let n = 0; const max = parseInt(target);
+      const it = setInterval(() => { n += Math.max(1, Math.floor(max/30)); if(n>=max){ n=max; clearInterval(it); } numEl.textContent = n + '+'; }, 30);
+    });
+
+    // ======================
+    // Radar (Chart.js)
+    // ======================
+    const radarCtx = document.getElementById('skillsRadar');
+    const radar = new Chart(radarCtx, {
+      type: 'radar',
+      data: {
+        labels: ['Python','Flask/FastAPI','SQL','ETL/DuckDB','Grafana/Prom','DevOps','IA (Groq/Gemini)'],
+        datasets:[{ 
+          label:'Proficiência', 
+          data:[95,90,90,85,80,80,85],
+        }]
+      },
+      options:{
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: { legend:{ display:false } },
+        scales: {
+          r: {
+            angleLines: { color: 'var(--chart-grid-color)' },
+            grid: { color: 'var(--chart-grid-color)' },
+            pointLabels: { color: 'var(--chart-label-color)', font: { family: 'Inter' } },
+            ticks: { display: false, max: 100 }
+          }
+        }
+      }
+    });
+
+    // ======================
+    // Projetos
+    // ======================
+    const projects = [
+      { name: 'Luft‑Docs', desc: 'Portal corporativo de documentos com busca híbrida, permissões por grupo, dashboards e APIs.', stack:['flask','postgresql','sqlserver','obs','ci/cd'], impact:'Reduziu tempo de busca e padronizou acesso seguro a docs críticos.', repo:'Widson64x/Luft-Docs', url:'https://github.com/Widson64x/Luft-Docs' },
+      { name: 'Nexus HUB', desc: 'Orquestrador de ETLs (CTC/Ecobox), APIs, dashboards e integrações internas.', stack:['python','etl','duckdb','parquet','obs'], impact:'Consolidação de dados, métricas e rotinas de atualização com logs/auditoria.', repo:'Widson64x/Nexus', url:'https://github.com/Widson64x' },
+      { name: 'Aéreo‑Comparativos', desc: 'Comparação CTC x AWB/NF com CTEs, pesos e fretes; análises e gráficos.', stack:['python','pandas','sql','streamlit'], impact:'Melhora visibilidade de custos e pesos taxados, apoiando decisões.', repo:'Widson64x/Aereo-Comparativos', url:'https://github.com/Widson64x/Aereo-Comparativos' },
+      { name: 'Gestor Torre de Controle', desc: 'Sistema para gestão de equipes, tarefas, painéis e indicadores.', stack:['flask','fastapi','postgresql','grafana'], impact:'Organiza operação, visão por status e follow‑ups.', repo:'Widson64x/Gestor-Torre-Controle', url:'https://github.com/Widson64x' },
+      { name: 'ChatMenu — Gemini & Groq (Free)', desc: 'Assistente unificado com contexto, upload, histórico e fallback automático.', stack:['ia','python','streamlit'], impact:'Aumenta produtividade diária do time com zero custo de API.', repo:'Widson64x/ChatMenu', url:'https://github.com/Widson64x' },
+      { name: 'Pipefy Docs Analyzer', desc: 'Varre cards, extrai e analisa documentação por pipeline.', stack:['flask','etl','ia'], impact:'Centraliza insights e status de documentação.', repo:'Widson64x/Pipefy-Docs-Analyzer', url:'https://github.com/Widson64x' },
+      { name: 'Dashboards Obs (Grafana/Prometheus)', desc: 'Painéis com métricas de APIs, GC, status HTTP, latência e logs.', stack:['obs','grafana','prometheus'], impact:'Reduz MTTR com telemetria útil para dev e operação.', repo:'Widson64x/obs-dashboards', url:'https://github.com/Widson64x' },
+      { name: 'Pratas Clara — Site responsivo', desc: 'Site estático com vídeo, roleta de marcas e catálogo simples.', stack:['html','css','js'], impact:'Presença digital rápida e leve no GitHub Pages.', repo:'Widson64x/Pratas-Clara', url:'https://github.com/Widson64x' },
+      { name: 'IA Corporativa (proposta técnica)', desc: 'Arquitetura por módulos (Coleta, Agendamento, NF, Faturamento, Motoristas...).', stack:['ia','arquitetura','diagramas'], impact:'Roadmap para adoção segura de IA.', repo:'Widson64x/ia-proposta', url:'https://github.com/Widson64x' }
+    ];
+
+    const allTags = Array.from(new Set(projects.flatMap(p=>p.stack))).sort();
+    let activeTag = null; const grid = document.getElementById('grid'); const empty = document.getElementById('empty'); const q = document.getElementById('q'); const tags = document.getElementById('tags');
+
+    function projHTML(p){
+      const pills = p.stack.map(s=>`<span class="text-xs px-2 py-1 rounded-full glass">${s}</span>`).join('');
+      return `<article class="rounded-2xl border border-dynamic overflow-hidden bg-card group" data-aos="fade-up" data-repo="${p.repo || ''}">
+        <div class="aspect-[16/9] bg-gradient-to-br from-brand/20 to-brand2/20 grid place-items-center">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor" class="opacity-90"><path d="M4 4h7l2 2h7a1 1 0 0 1 1 1v4H3V5a1 1 0 0 1 1-1Zm-1 8h22v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-7Zm6 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg>
+        </div>
+        <div class="p-4 flex flex-col gap-2">
+          <div class="flex items-center justify-between gap-2"><h4 class="font-bold">${p.name}</h4><a href="${p.url}" target="_blank" class="px-3 py-1 rounded-full glass">Código</a></div>
+          <p class="text-sm">${p.desc}</p>
+          <p class="text-muted text-xs">${p.impact}</p>
+          <div class="flex flex-wrap gap-2">${pills}</div>
+          <div class="project-meta-placeholder min-h-[20px] mt-1"></div>
+        </div>
+      </article>`
+    }
+
+    async function hydrateGitHubMeta(p){
+      if(!p.repo) return p;
+      try {
+        const r = await fetch(`https://api.github.com/repos/${p.repo}`);
+        if(!r.ok) return p; const j = await r.json();
+        p.meta = { stars: j.stargazers_count, forks: j.forks_count };
+      } catch(e) { /* falha silenciosamente */ }
+      return p;
+    }
+
+    async function renderTags(){
+      tags.innerHTML = '';
+      const any = document.createElement('button'); any.className = `px-3 py-2 rounded-full glass ${!activeTag? 'bg-white/10':''}`; any.textContent = 'Tudo'; any.onclick = ()=>{ activeTag=null; renderTags(); filterProjects(); }; tags.appendChild(any);
+      allTags.forEach(t=>{ const b = document.createElement('button'); b.className = `px-3 py-2 rounded-full glass ${activeTag===t? 'bg-white/10':''}`; b.textContent = t.toUpperCase(); b.onclick = ()=>{ activeTag = (activeTag===t? null : t); renderTags(); filterProjects(); }; tags.appendChild(b); });
+    }
+
+    // A função antiga será totalmente substituída por esta nova
+    async function filterProjects() {
+      // 1. Filtra a lista de projetos normalmente
+      const term = (q?.value || '').trim().toLowerCase();
+      const list = projects.filter(p => {
+        const hitTag = !activeTag || p.stack.includes(activeTag);
+        const txt = (p.name + ' ' + p.desc + ' ' + p.stack.join(' ') + ' ' + p.impact).toLowerCase();
+        const hitTxt = !term || txt.includes(term);
+        return hitTag && hitTxt;
+      });
+
+      // 2. Coloca o HTML dos projetos na página
+      grid.innerHTML = list.map(projHTML).join('');
+      empty.classList.toggle('hidden', list.length === 0);
+
+      // 3. (A MUDANÇA CRUCIAL) Adiciona um pequeno delay antes de atualizar a animação.
+      // Isso força o navegador a primeiro "desenhar" os cards na tela e,
+      // no instante seguinte, a biblioteca de animação os "encontra" e aplica o efeito.
+      setTimeout(() => {
+        AOS.refresh();
+      }, 1); // Um delay mínimo, apenas para separar os processos.
+
+      // 4. Busca os dados do GitHub de forma assíncrona, como antes.
+      list.forEach(async (p) => {
+        if (!p.repo) return;
+        await hydrateGitHubMeta(p);
+        if (p.meta) {
+          const cardElement = grid.querySelector(`[data-repo="${p.repo}"]`);
+          if (cardElement) {
+            const placeholder = cardElement.querySelector('.project-meta-placeholder');
+            if(placeholder) {
+              placeholder.innerHTML = `<div class="flex gap-2 text-xs text-muted"><span>⭐ ${p.meta.stars}</span><span>🍴 ${p.meta.forks}</span></div>`;
+            }
+          }
+        }
+      });
+    }
+
+    function selectTag(t){ activeTag = t; renderTags(); filterProjects(); document.getElementById('projetos').scrollIntoView({behavior:'smooth'}); }
+
+    // ======================
+    // NOVO SISTEMA DE TEMA
+    // ======================
+    const THEMES = [
+      { id: 'sky', name: 'Cyber Sky', chartDatasetColors: { borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.2)', pointBackgroundColor: '#0ea5e9' }, colors: { '--bg-color': '#020617', '--bg-header-color': 'rgba(2, 6, 23, 0.7)', '--bg-card-color': 'rgba(2, 6, 23, 0.5)', '--text-color': '#f1f5f9', '--text-muted-color': '#94a3b8', '--border-color': 'rgba(255, 255, 255, 0.1)', '--glass-bg': 'rgba(255, 255, 255, 0.04)', '--brand-color': '#0ea5e9', '--brand2-color': '#a78bfa', '--brand-text-color': '#020617', '--glow-color': 'rgba(2, 8, 23, 0.6)', '--chart-grid-color': 'rgba(255,255,255,.08)', '--chart-label-color': '#cbd5e1', '--chart-bg-color': 'rgba(2, 6, 23, 0.5)' } },
+      { id: 'synthwave', name: 'Synthwave', chartDatasetColors: { borderColor: '#f472b6', backgroundColor: 'rgba(244, 114, 182, 0.2)', pointBackgroundColor: '#f472b6' }, colors: { '--bg-color': '#0f0a14', '--bg-header-color': 'rgba(15, 10, 20, 0.7)', '--bg-card-color': 'rgba(15, 10, 20, 0.5)', '--text-color': '#f3e8ff', '--text-muted-color': '#d8b4fe', '--border-color': 'rgba(255, 255, 255, 0.1)', '--glass-bg': 'rgba(255, 255, 255, 0.05)', '--brand-color': '#f472b6', '--brand2-color': '#fbbf24', '--brand-text-color': '#0f0a14', '--glow-color': 'rgba(20, 8, 23, 0.6)', '--chart-grid-color': 'rgba(255,255,255,.1)', '--chart-label-color': '#e9d5ff', '--chart-bg-color': 'rgba(15, 10, 20, 0.5)' } },
+      { id: 'forest', name: 'Forest', chartDatasetColors: { borderColor: '#22d3ee', backgroundColor: 'rgba(34, 211, 238, 0.2)', pointBackgroundColor: '#22d3ee' }, colors: { '--bg-color': '#05161a', '--bg-header-color': 'rgba(5, 22, 26, 0.7)', '--bg-card-color': 'rgba(5, 22, 26, 0.5)', '--text-color': '#e0f2f1', '--text-muted-color': '#b2dfdb', '--border-color': 'rgba(255, 255, 255, 0.1)', '--glass-bg': 'rgba(255, 255, 255, 0.05)', '--brand-color': '#22d3ee', '--brand2-color': '#6ee7b7', '--brand-text-color': '#05161a', '--glow-color': 'rgba(5, 22, 26, 0.6)', '--chart-grid-color': 'rgba(255,255,255,.1)', '--chart-label-color': '#a7f3d0', '--chart-bg-color': 'rgba(5, 22, 26, 0.5)' } },
+      { id: 'light', name: 'Light', vantaLineColor: '#e11d48', chartDatasetColors: { borderColor: '#8b5cf6', backgroundColor: 'rgba(139, 92, 246, 0.2)', pointBackgroundColor: '#8b5cf6' }, colors: { '--bg-color': '#f8fafc', '--bg-header-color': 'rgba(248, 250, 252, 0.7)', '--bg-card-color': 'rgba(248, 250, 252, 0.5)', '--text-color': '#0f172a', '--text-muted-color': '#64748b', '--border-color': 'rgba(0, 0, 0, 0.1)', '--glass-bg': 'rgba(255, 255, 255, 0.4)', '--brand-color': '#0ea5e9', '--brand2-color': '#8b5cf6', '--brand-text-color': '#f8fafc', '--glow-color': 'rgba(2, 8, 23, 0.1)', '--chart-grid-color': 'rgba(0,0,0,.1)', '--chart-label-color': '#334155', '--chart-bg-color': 'transparent' } },
+    ];
+    
+    const themeBtn = document.getElementById('themeBtn');
+    const themeModal = document.getElementById('themeModal');
+    const closeThemeModalBtn = document.getElementById('closeThemeModalBtn');
+    const themeGrid = document.getElementById('themeGrid');
+    
+    function applyTheme(themeId) {
+      const theme = THEMES.find(t => t.id === themeId);
+      if (!theme) return;
+      
+      Object.entries(theme.colors).forEach(([key, value]) => {
+        document.documentElement.style.setProperty(key, value);
+      });
+      
+      document.getElementById('metaTheme').setAttribute('content', theme.colors['--brand-color']);
+      localStorage.setItem('portfolioTheme', themeId);
+      
+      const vantaColorHex = theme.vantaLineColor || theme.colors['--brand-color'];
+      if (vantaEffect) {
+        vantaEffect.setOptions({
+          color: parseInt(vantaColorHex.substring(1), 16),
+          backgroundColor: parseInt(theme.colors['--bg-color'].substring(1), 16)
+        });
+      }
+      
+      radar.options.scales.r.angleLines.color = theme.colors['--chart-grid-color'];
+      radar.options.scales.r.grid.color = theme.colors['--chart-grid-color'];
+      radar.options.scales.r.pointLabels.color = theme.colors['--chart-label-color'];
+      
+      const themeChartColors = theme.chartDatasetColors;
+      if (themeChartColors) {
+        radar.data.datasets[0].borderColor = themeChartColors.borderColor;
+        radar.data.datasets[0].backgroundColor = themeChartColors.backgroundColor;
+        radar.data.datasets[0].pointBackgroundColor = themeChartColors.pointBackgroundColor;
+      }
+      
+      radar.update();
+    }
+
+    function populateThemeSelector() {
+      themeGrid.innerHTML = '';
+      THEMES.forEach(theme => {
+        const btn = document.createElement('button');
+        btn.className = 'p-4 rounded-lg text-left border-2 border-dynamic hover:border-brand transition-colors';
+        btn.innerHTML = `
+          <div class="font-semibold">${theme.name}</div>
+          <div class="flex gap-2 mt-2">
+            <span class="w-6 h-6 rounded-full" style="background-color: ${theme.colors['--brand-color']}"></span>
+            <span class="w-6 h-6 rounded-full" style="background-color: ${theme.colors['--brand2-color']}"></span>
+            <span class="w-6 h-6 rounded-full" style="background-color: ${theme.colors['--bg-color']}; border: 1px solid ${theme.colors['--border-color']}"></span>
+          </div>
+        `;
+        btn.onclick = () => {
+          applyTheme(theme.id);
+          themeModal.classList.add('hidden');
+        };
+        themeGrid.appendChild(btn);
+      });
+    }
+
+    themeBtn.onclick = () => themeModal.classList.remove('hidden');
+    closeThemeModalBtn.onclick = () => themeModal.classList.add('hidden');
+    themeModal.addEventListener('click', e => { if (e.target === themeModal) themeModal.classList.add('hidden'); });
+
+    // ======================
+    // Command Palette (Ctrl/⌘+K)
+    // ======================
+    const cmd = document.getElementById('cmd'); const cmdInput = document.getElementById('cmdInput'); const cmdList = document.getElementById('cmdList'); const cmdBtn = document.getElementById('cmdBtn');
+    const commands = [
+      { name:'Ir: Projetos', run:()=>document.getElementById('projetos').scrollIntoView({behavior:'smooth'}) },
+      { name:'Ir: Topo', run:()=>window.scrollTo({top:0,behavior:'smooth'}) },
+      { name:'Ir: Contato', run:()=>document.getElementById('contato').scrollIntoView({behavior:'smooth'}) },
+      { name:'Abrir GitHub', run:()=>window.open(LINKS.GITHUB,'_blank') },
+      { name:'Copiar e‑mail', run:async()=>{ await navigator.clipboard.writeText(LINKS.EMAIL); alert('E‑mail copiado!'); } },
+      { name:'Alterar tema', run:()=>themeBtn.click() },
+      { name:'Baixar CV', run:()=>window.print() },
+    ];
+    function openCmd(){ cmd.classList.remove('hidden'); cmd.classList.add('flex'); cmdInput.value=''; cmdInput.focus(); renderCmd(); }
+    function closeCmd(){ cmd.classList.add('hidden'); cmd.classList.remove('flex'); }
+    function renderCmd(){ const q = cmdInput.value.toLowerCase(); const list = commands.filter(c => !q || c.name.toLowerCase().includes(q)); cmdList.innerHTML = list.map(c=>`<button class='w-full text-left px-3 py-2 hover:bg-white/5 rounded-lg'>${c.name}</button>`).join(''); [...cmdList.children].forEach((el,i)=>el.onclick=()=> { list[i].run(); closeCmd(); }); }
+    cmdBtn.onclick = openCmd; cmd.addEventListener('click', e=>{ if(e.target===cmd) closeCmd(); }); cmdInput.oninput = renderCmd; window.addEventListener('keydown', e=>{ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); openCmd(); } if(e.key==='Escape'){ closeCmd(); } });
+
+    // ======================
+    // Geral e Inicialização
+    // ======================
+    document.getElementById('cvBtn').onclick = ()=>window.print();
+    document.getElementById('copyMail').onclick = async ()=>{ try{ await navigator.clipboard.writeText(LINKS.EMAIL); alert('E‑mail copiado!'); }catch{ alert(LINKS.EMAIL); } };
+    document.getElementById('year').textContent = new Date().getFullYear();
+    window.addEventListener('scroll', ()=>{ document.getElementById('toTop').classList.toggle('hidden', window.scrollY<400); });
+
+    AOS.init({ duration: 600, once: true, offset: 60 });
+    
+    window.addEventListener('load', () => {
+      const initialThemeId = localStorage.getItem('portfolioTheme') || 'sky';
+      const initialTheme = THEMES.find(t => t.id === initialThemeId) || THEMES[0];
+      const initialVantaColor = initialTheme.vantaLineColor || initialTheme.colors['--brand-color'];
+
+      vantaEffect = VANTA.NET({ 
+        el: '#vanta', 
+        THREE: window.THREE, 
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        color: parseInt(initialVantaColor.substring(1), 16),
+        backgroundColor: parseInt(initialTheme.colors['--bg-color'].substring(1), 16),
+        points: 10.0, 
+        maxDistance: 24.0, 
+        spacing: 18.0, 
+        showDots: false
+      });
+
+      populateThemeSelector();
+      applyTheme(initialThemeId);
+      
+      renderTags(); 
+      filterProjects();
+    });
+  </script>
+</body>
+</html>
